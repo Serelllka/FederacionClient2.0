@@ -1,0 +1,9 @@
+.condemn__form {
+    border: 1px solid #fff;
+    color: #fff;
+    width: 360px;
+    border-radius: 5px;
+
+    display: flex;
+    flex-direction: column;
+}
