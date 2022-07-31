@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
-import { BrowserRouter, useLocation, Route, Routes} from 'react-router-dom';
-import AuthPage from './pages/AuthPage';
-import MainPage from './pages/MainPage';
+import { BrowserRouter} from 'react-router-dom';
 import Navbar from './components/UI/navbar/navbar';
 import AppRouter from './components/AppRouter';
 
@@ -13,7 +11,7 @@ function App() {
           {active &&
             <Navbar/>
           }
-          <div class="container intro__middle">
+          <div className="container intro__middle">
             <AppRouter setActive={setActive}/>
           </div>
         </div>

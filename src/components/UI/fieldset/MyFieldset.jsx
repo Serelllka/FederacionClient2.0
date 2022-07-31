@@ -1,20 +1,45 @@
 import React from "react";
+import {useState} from "react"
 import classes from './MyFieldset.module.css'
 
-const MyFieldset = ({lable}) => {
+const MyFieldset = ({
+    children,
+    inputId, 
+    optionList, 
+    getOption, 
+    setValue,
+    props}) => { 
+    
+    const listId = inputId + '__list'
+    const [val, setVal] = useState('')
+
     return (
-        <fieldset class={classes.condemn__form}>
-            <label for="convicted__datalist" class="form-label">
-                {lable}
+        <fieldset className={classes.condemn__form}>
+            <label className={classes.form__lable}>
+                {children}
             </label>
-            <input class="form-control" list="convicted__datalist" id="convicted__input" placeholder="Type to search..."/>
+            <input 
+                className={classes.form__control} 
+                list={listId} 
+                id={inputId} 
+                {...props}
+
+                value={val}
+                onChange={e => {
+                    setVal(e.target.value)
+                    setValue(e.target.value)
+                }}
+                />
             
-            <datalist class="convicted__list__container" id="convicted__datalist">
-                <script id="convicted__template" type="text/x-handlebars-template">
-                    {/* {{#each data}}
-                        <option value="{{username}}" data-value="{{id}}"></option>
-                    {{/each}} */}
-                </script>
+            <datalist className="convicted__list__container" id={listId}>
+                {optionList.length === 0 
+                ?
+                    <option>Ничего нет :c</option>
+                :
+                    optionList.map(option =>
+                        getOption(option)
+                    )
+                }
             </datalist>
         </fieldset>
     )

@@ -4,6 +4,17 @@
     width: 360px;
     border-radius: 5px;
 
+    padding: 0;
+
     display: flex;
     flex-direction: column;
+}
+
+.form__control {
+    padding: 6px 12px;
+    border: 2px;
+}
+
+.form__lable {
+    margin-bottom: 8px;
 }

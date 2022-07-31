@@ -14,6 +14,7 @@ const config = {
 const AuthPage = ({setActive}) => {
     const router = useNavigate()
     setActive(false)
+    
     function handle(e) {
         e.preventDefault()
         setAuthForm({...authForm, status: !authForm.status})
@@ -25,7 +26,6 @@ const AuthPage = ({setActive}) => {
         client.login(authForm.username, authForm.password).then(item => {
             localStorage.setItem('token', item)
             router("/main")
-            console.log(item)
         })
     }
 
@@ -42,13 +42,13 @@ const AuthPage = ({setActive}) => {
     const getFirstButton = () => {
         if (authForm.status) {
             return (
-                <MyButton active onClick={signIn}>
+                <MyButton isActive onClick={signIn}>
                     Уже смешарик
                 </MyButton>
             )
         } else {
             return (
-                <MyButton active onClick={signUp}>
+                <MyButton isActive onClick={signUp}>
                     Стать смешариком!
                 </MyButton>
             )
@@ -91,13 +91,14 @@ const AuthPage = ({setActive}) => {
                     id="username" 
                     placeholder="USERNAME"
                 />
+                {!authForm.status &&
                 <MyInput 
                     value={authForm.email}
                     onChange={e => setAuthForm({...authForm, email: e.target.value})}
                     type="text" 
                     id="email" 
                     placeholder="EMAIL"
-                />
+                />}
                 <MyInput
                     value={authForm.password}
                     onChange={e => setAuthForm({...authForm, password: e.target.value})}

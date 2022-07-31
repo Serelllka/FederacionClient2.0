@@ -1,8 +1,8 @@
 import React from "react";
 import classes from './MyButton.module.css'
 
-const MyButton = ({children, ...props}) => {
-    if (props.active) {
+const MyButton = ({children, isActive, ...props}) => {
+    if (isActive) {
         return (
             <button {...props} className={classes.active}>
                 {children}
