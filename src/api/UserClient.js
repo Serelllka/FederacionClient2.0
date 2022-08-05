@@ -45,21 +45,4 @@ export class UserClient {
             }
         })
     }
-
-    async getAllArticlesAsync(token) {
-        return this.client.request({
-            method: "GET",
-            url: "/api/articles/",
-            headers: {
-                Accept: "text/plain",
-                Authorization: `Bearer ${token}`
-            },
-        }).catch(error => {
-            throw error;
-        }).then(result => {
-            if (result.status === 200) {
-                return result.data;
-            }
-        })
-    }
 }

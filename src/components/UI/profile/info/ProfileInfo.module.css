@@ -1,0 +1,11 @@
+.nick__container {
+    /* margin: 1vw; */
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: 100%;
+
+    margin-left: 2%;
+    width: 78%;
+}

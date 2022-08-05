@@ -1,0 +1,28 @@
+.profile__container {
+  display: flex;
+}
+
+.profileMainInfo {
+  display: flex;
+
+  width: 100%;
+}
+
+.profilePage {
+  width: 80%;
+  margin: auto;
+
+  margin-top: 15px;
+}
+
+/* .intro {
+  height: initial;
+  min-height: 100vh;
+}
+  
+.intro__middle {
+  height: initial;
+  min-height: 100vh;  
+  padding-left: 0;
+  padding-right: 0;
+} */

@@ -1,15 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import '../styles/AuthPage.css';
-import { UserClient } from "../api/UserClient";
+import { UserApiClient } from "../utils/ApiClientsInstances";
 import {useNavigate} from "react-router-dom";
 import MyInput from "../components/UI/input/MyInput"
 import MyButton from "../components/UI/button/MyButton"
-
-const config = {
-    timetick: 100,
-    baseUrl: 'http://localhost:8000'
-}
 
 const AuthPage = ({setActive}) => {
     const router = useNavigate()
@@ -22,8 +17,7 @@ const AuthPage = ({setActive}) => {
 
     function signIn(e) {
         e.preventDefault()
-        var client = new UserClient(config.baseUrl);
-        client.login(authForm.username, authForm.password).then(item => {
+        UserApiClient.login(authForm.username, authForm.password).then(item => {
             localStorage.setItem('token', item)
             router("/main")
         })

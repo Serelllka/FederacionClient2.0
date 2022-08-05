@@ -2,35 +2,23 @@ import React from "react";
 import { useState, useEffect } from "react";
 import '../styles/MainPage.css';
 import MyButton from '../components/UI/button/MyButton';
-import {UserClient} from '../api/UserClient'
+import { UserApiClient, ArticleApiClient } from "../utils/ApiClientsInstances";
 import MyFieldset from '../components/UI/fieldset/MyFieldset';
-import { CondemnationClient } from "../api/CondemnationClient";
-
-const config = {
-    timetick: 100,
-    baseUrl: 'http://localhost:8000'
-}
+import { CondemnationApiClient } from "../utils/ApiClientsInstances";
 
 function MainPage({setActive}) {
     setActive(true)
 
     const getAllUsers = async () => {
-        const client = new UserClient(config.baseUrl)
-        var users = await client.getAllUsersAsync()
+        var users = await UserApiClient.getAllUsersAsync()
         setUsers(users.data.filter(item => item.id !== 1))
     }
 
     const getAllArticles = async () => {
-        const client = new UserClient(config.baseUrl)
         const token = localStorage.getItem('token')
-        var articles = await client.getAllArticlesAsync(token)
+        var articles = await ArticleApiClient.getAllArticlesAsync(token)
         setArticles(articles.data)
     }
-
-    useEffect(() => {
-        getAllUsers()
-        getAllArticles()
-    }, [])
 
     useEffect(() => {
         getAllUsers()
@@ -113,8 +101,7 @@ function MainPage({setActive}) {
                 <MyButton isActive onClick={
                     () => {
                         const token = localStorage.getItem('token')
-                        const condem = new CondemnationClient(config.baseUrl)
-                        condem.createAsync(token, convictedId, articleId, description, parseFloat(cost))
+                        CondemnationApiClient.createAsync(token, convictedId, articleId, description, parseFloat(cost))
                     }
                 }>
                     ОСУДИТЬ!!!
