@@ -12,7 +12,7 @@ copy_dockercompose:
 build_image:
   stage: build
   script:
-    - docker build -t federacionClient .
+    - docker build -t federacion_client .
 
 run_client:
   stage: run
