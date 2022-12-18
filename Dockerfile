@@ -1,6 +1,5 @@
 FROM node
 
-COPY ["src", "/var/www/html/src"]
 COPY ["project", "/var/www/html/"]
 
 WORKDIR "/var/www/html/"
