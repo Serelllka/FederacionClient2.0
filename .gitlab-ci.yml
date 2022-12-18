@@ -1,0 +1,21 @@
+stages:
+  - copy
+  - build
+  - run
+
+copy_dockercompose:
+  stage: copy
+  script:
+    - mkdir -p /home/federacionClient/
+    - cp docker-compose.yml /home/federacionClient/docker-compose.yml
+
+build_image:
+  stage: build
+  script:
+    - docker build -t federacionClient .
+
+run_client:
+  stage: run
+  script:
+    - cd /home/federacionClient/ && docker compose up -d
+
