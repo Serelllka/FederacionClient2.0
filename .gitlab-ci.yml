@@ -17,5 +17,5 @@ build_image:
 run_client:
   stage: run
   script:
-    - cd /home/federacionClient/ && docker compose up -d
+    - cd /home/federacionClient/ && docker-compose up -d
 
