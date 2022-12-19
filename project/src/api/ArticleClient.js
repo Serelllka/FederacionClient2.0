@@ -11,7 +11,8 @@ export class ArticleClient {
     async getAllArticlesAsync(token) {
         return this.client.request({
             method: "GET",
-            url: "/api/articles/",
+            // url: "/api/articles/",
+            url: "https://63a0aca7e3113e5a5c446025.mockapi.io/v1/Articles",
             headers: {
                 Accept: "text/plain",
                 Authorization: `Bearer ${token}`
@@ -20,7 +21,8 @@ export class ArticleClient {
             throw error;
         }).then(result => {
             if (result.status === 200) {
-                return result.data;
+                return result;
+                // return result.data;
             }
         })
     }

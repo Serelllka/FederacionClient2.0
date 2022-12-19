@@ -1,19 +1,19 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import '../styles/AuthPage.css';
+import '../../styles/AuthPage.css';
 import {useNavigate} from "react-router-dom";
-import Stats from "../components/UI/profile/stats/Stats";
-import classes from '../styles/ProfilePage.module.css';
-import RightBar from "../components/UI/profile/rightBar/RightBar";
-import ProfileImage from "../components/UI/profile/profileImage/ProfileImage";
-import ProfileInfo from "../components/UI/profile/info/ProfileInfo";
-import { UserInfoApiClient } from "../utils/ApiClientsInstances";
+import Stats from "../../components/UI/profile/stats/Stats";
+import classes from '../../styles/ProfilePage.module.css';
+import RightBar from "../../components/UI/profile/rightBar/RightBar";
+import ProfileImage from "../../components/UI/profile/profileImage/ProfileImage";
+import ProfileInfo from "../../components/UI/profile/info/ProfileInfo";
+import { UserInfoApiClient } from "../../utils/ApiClientsInstances";
 
 const ProfilePage = ({setActive}) => {
     const router = useNavigate();
     setActive(true);
 
-    var [userInfo, setUserInfo] = useState({
+    let [userInfo, setUserInfo] = useState({
         id: "",
         name: "",
         username: "",

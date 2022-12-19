@@ -1,23 +1,26 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import '../styles/MainPage.css';
-import MyButton from '../components/UI/button/MyButton';
-import { UserApiClient, ArticleApiClient } from "../utils/ApiClientsInstances";
-import MyFieldset from '../components/UI/fieldset/MyFieldset';
-import { CondemnationApiClient } from "../utils/ApiClientsInstances";
+import {useState, useEffect} from "react";
+import '../../styles/MainPage.css';
+import MyButton from '../../components/UI/button/MyButton';
+import {UserApiClient, ArticleApiClient} from "../../utils/ApiClientsInstances";
+import MyFieldset from '../../components/UI/fieldset/MyFieldset';
+import {CondemnationApiClient} from "../../utils/ApiClientsInstances";
 
 function MainPage({setActive}) {
     setActive(true)
-
     const getAllUsers = async () => {
-        var users = await UserApiClient.getAllUsersAsync()
-        setUsers(users.data.filter(item => item.id !== 1))
+        const users = await UserApiClient.getAllUsersAsync();
+        if (users) {
+            setUsers(users.data.filter(item => item.id !== 1))
+        }
     }
 
     const getAllArticles = async () => {
         const token = localStorage.getItem('token')
-        var articles = await ArticleApiClient.getAllArticlesAsync(token)
-        setArticles(articles.data)
+        const articles = await ArticleApiClient.getAllArticlesAsync(token);
+        if (articles) {
+            setArticles(articles.data)
+        }
     }
 
     useEffect(() => {
@@ -31,7 +34,6 @@ function MainPage({setActive}) {
         description: '',
         cost: 0
     })
-
 
 
     const [users, setUsers] = useState([])
@@ -60,7 +62,7 @@ function MainPage({setActive}) {
 
     const getArticleIdByName = () => {
         const filteredArray = articles.filter(item => item.name === article)
-        
+
         if (filteredArray.length !== 0) {
             setArticleId(filteredArray[0].id)
             setCost(filteredArray[0].currentCost)
@@ -70,8 +72,8 @@ function MainPage({setActive}) {
     return (
         <div style={{height: "100%"}}>
             <div className="condemn__box">
-                <MyFieldset 
-                    inputId={'convicted__fieldset'} 
+                <MyFieldset
+                    inputId={'convicted__fieldset'}
                     optionList={users}
                     setValue={setUsername}
                     getOption={item => {
@@ -83,9 +85,9 @@ function MainPage({setActive}) {
                     Осужденный
                 </MyFieldset>
 
-                <MyFieldset 
-                    inputId={'article__fieldset'} 
-                    optionList={articles} 
+                <MyFieldset
+                    inputId={'article__fieldset'}
+                    optionList={articles}
                     setValue={setArticle}
                     getOption={item => {
                         return (
@@ -101,6 +103,14 @@ function MainPage({setActive}) {
                 <MyButton isActive onClick={
                     () => {
                         const token = localStorage.getItem('token')
+
+                        const condemnations = JSON.parse(localStorage.getItem('condemnations'))
+                        condemnations.push(
+                            "user with id: " + convictedId +
+                            "\n was convicted under article with id:" + articleId
+                        );
+                        localStorage.setItem('condemnations', JSON.stringify(condemnations))
+
                         CondemnationApiClient.createAsync(token, convictedId, articleId, description, parseFloat(cost))
                     }
                 }>

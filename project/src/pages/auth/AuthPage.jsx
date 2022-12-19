@@ -1,10 +1,10 @@
 import React from "react";
 import { useState } from "react";
-import '../styles/AuthPage.css';
-import { UserApiClient } from "../utils/ApiClientsInstances";
+import '../../styles/AuthPage.css';
+import { UserApiClient } from "../../utils/ApiClientsInstances";
 import {useNavigate} from "react-router-dom";
-import MyInput from "../components/UI/input/MyInput"
-import MyButton from "../components/UI/button/MyButton"
+import MyInput from "../../components/UI/input/MyInput"
+import MyButton from "../../components/UI/button/MyButton"
 
 const AuthPage = ({setActive}) => {
     const router = useNavigate()

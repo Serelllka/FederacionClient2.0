@@ -8,7 +8,8 @@ const MyFieldset = ({
     optionList, 
     getOption, 
     setValue,
-    props}) => { 
+    props}) => {
+    console.log(children + " optionList: ", optionList)
     
     const listId = inputId + '__list'
     const [val, setVal] = useState('')

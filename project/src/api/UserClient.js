@@ -33,7 +33,8 @@ export class UserClient {
     async getAllUsersAsync() {
         return this.client.request({
             method: "GET",
-            url: "/users/",
+            // url: "/users/",
+            url: "https://63a0aca7e3113e5a5c446025.mockapi.io/v1/User",
             headers: {
                 Accept: "text/plain",
             },
@@ -41,7 +42,8 @@ export class UserClient {
             throw error;
         }).then(result => {
             if (result.status === 200) {
-                return result.data;
+                // return result.data;
+                return result;
             }
         })
     }
