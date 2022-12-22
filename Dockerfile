@@ -12,7 +12,7 @@ COPY project/src /var/www/html/
 COPY project/postcss.config.js /var/www/html/
 COPY project/tailwind.config.js /var/www/html/
 
-RUN npm build
+RUN npm run build
 
 FROM node:alpine
 
