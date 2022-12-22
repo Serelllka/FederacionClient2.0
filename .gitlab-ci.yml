@@ -32,7 +32,8 @@ create_env:
   script:
     - rm -f /home/federacionClient/.env
     - cp .env.example /home/federacionClient/.env
-    - sed -e "s/CLIENT_IMAGE.*/CLIENT_IMAGE=registry.$(echo $CI_PROJECT_URL | sed -e "s/https:\/\///g")/$CI_COMMIT_BRANCH/federacion_client/g" /home/federacionClient/.env
+#    - sed -e "s/CLIENT_IMAGE.*/CLIENT_IMAGE=registry.$(echo $CI_PROJECT_URL | sed -e "s/https:\/\///g")/$CI_COMMIT_BRANCH/federacion_client/g" /home/federacionClient/.env
+    - echo "CLIENT_IMAGE=registry.$(echo $CI_PROJECT_URL | sed -e \"s/https:\/\///g\")/$CI_COMMIT_BRANCH/federacion_client"
 
 run_client:
   stage: run
