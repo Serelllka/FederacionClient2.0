@@ -11,14 +11,14 @@ variables:
 build:
   stage: build-image
   script:
-    - docker build -t $IMAGE_NAME .
-    - docker tag $IMAGE_NAME $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+    - docker build -t registry.$(echo $CI_PROJECT_URL | sed -e "s/https:\/\///g")/$CI_COMMIT_BRANCH/federacion_client .
+    - docker tag registry.$(echo $CI_PROJECT_URL | sed -e "s/https:\/\///g")/$CI_COMMIT_BRANCH/federacion_client registry.$(echo $CI_PROJECT_URL | sed -e "s/https:\/\///g")/$CI_COMMIT_BRANCH/federacion_client:$CI_COMMIT_SHORT_SHA
 
 push-to-registry:
   stage: push-image
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker push $IMAGE_NAME && docker push $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+    - docker push registry.$(echo $CI_PROJECT_URL | sed -e "s/https:\/\///g")/$CI_COMMIT_BRANCH/federacion_client && docker push registry.$(echo $CI_PROJECT_URL | sed -e "s/https:\/\///g")/$CI_COMMIT_BRANCH/federacion_client:$CI_COMMIT_SHORT_SHA
     - docker logout
 
 copy_dockercompose:
@@ -32,7 +32,7 @@ create_env:
   script:
     - rm -f /home/federacionClient/.env
     - cp .env.example /home/federacionClient/.env
-    - sed -e "s/CLIENT_IMAGE.*/CLIENT_IMAGE=$IMAGE_NAME/g" /home/federacionClient/.env
+    - sed -e "s/CLIENT_IMAGE.*/CLIENT_IMAGE=registry.$(echo $CI_PROJECT_URL | sed -e "s/https:\/\///g")/$CI_COMMIT_BRANCH/federacion_client/g" /home/federacionClient/.env
 
 run_client:
   stage: run
