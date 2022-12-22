@@ -7,8 +7,8 @@ WORKDIR /var/www/html/
 
 RUN npm install
 
-COPY project/public /var/www/html/
-COPY project/src /var/www/html/
+COPY project/public /var/www/html/public/
+COPY project/src /var/www/html/src/
 COPY project/postcss.config.js /var/www/html/
 COPY project/tailwind.config.js /var/www/html/
 
