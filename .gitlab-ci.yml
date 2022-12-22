@@ -6,19 +6,19 @@ stages:
   - run
 
 variables:
-  IMAGE_NAME: registry.$(echo $CI_PROJECT_URL | sed -e "s/https:\/\///g")/$CI_COMMIT_BRANCH/federacion_client
+  IMAGE_NAME: registry.$(echo $CI_PROJECT_URL | sed -e "s/https:\/\///g" | tr '[:upper:]' '[:lower:]')/$CI_COMMIT_BRANCH/federacion_client
 
 build:
   stage: build-image
   script:
-    - docker build -t registry.$(echo $CI_PROJECT_URL | sed -e "s/https:\/\///g")/$CI_COMMIT_BRANCH/federacion_client .
-    - docker tag registry.$(echo $CI_PROJECT_URL | sed -e "s/https:\/\///g")/$CI_COMMIT_BRANCH/federacion_client registry.$(echo $CI_PROJECT_URL | sed -e "s/https:\/\///g")/$CI_COMMIT_BRANCH/federacion_client:$CI_COMMIT_SHORT_SHA
+    - docker build -t $IMAGE_NAME .
+    - docker tag $IMAGE_NAME $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
 
 push-to-registry:
   stage: push-image
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker push registry.$(echo $CI_PROJECT_URL | sed -e "s/https:\/\///g")/$CI_COMMIT_BRANCH/federacion_client && docker push registry.$(echo $CI_PROJECT_URL | sed -e "s/https:\/\///g")/$CI_COMMIT_BRANCH/federacion_client:$CI_COMMIT_SHORT_SHA
+    - docker push $IMAGE_NAME && docker push $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
     - docker logout
 
 copy_dockercompose:
