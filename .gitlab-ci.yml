@@ -1,7 +1,25 @@
 stages:
+  - build-image
+  - push-image
   - copy
-  - build
+  - env-setting
   - run
+
+variables:
+  IMAGE_NAME: registry.$(echo $CI_PROJECT_URL | sed -e "s/https:\/\///g")/$CI_COMMIT_BRANCH/federacion_client
+
+build:
+  stage: build-image
+  script:
+    - docker build -t $IMAGE_NAME .
+    - docker tag $IMAGE_NAME $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+
+push-to-registry:
+  stage: push-image
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker push $IMAGE_NAME && docker push $IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+    - docker logout
 
 copy_dockercompose:
   stage: copy
@@ -9,13 +27,18 @@ copy_dockercompose:
     - mkdir -p /home/federacionClient/
     - cp docker-compose.yml /home/federacionClient/docker-compose.yml
 
-build_image:
-  stage: build
+create_env:
+  stage: env-setting
   script:
-    - docker build -t federacion_client .
+    - rm -f /home/federacionClient/.env
+    - cp .env.example /home/federacionClient/.env
+    - sed -e "s/CLIENT_IMAGE.*/CLIENT_IMAGE=$IMAGE_NAME/g" /home/federacionClient/.env
 
 run_client:
   stage: run
   script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - cd /home/federacionClient/ && docker-compose up -d
+    - docker logout
+
 

@@ -6,17 +6,20 @@ const CondemnationLogPage = ({setActive}) => {
     setActive(true)
 
     const items = JSON.parse(localStorage.getItem('condemnations'))
-    console.log("items: ", items)
 
     return (
-        <div style={{height: "100%"}}>
+        <div style={{height: "auto"}}>
             <div style={{color: "white"}}>
                 {items.length === 0
                     ?
                     <div>Нет</div>
                     :
                     items.map(item => {
-                        return <p>{item}</p>
+                        return (
+                            <div style={{background: "red"}}>
+                                <p>{item}</p>
+                            </div>
+                        )
                     })
                 }
             </div>

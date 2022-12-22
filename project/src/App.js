@@ -1,9 +1,12 @@
-import React, {useState} from 'react';
-import {BrowserRouter} from 'react-router-dom';
-import Navbar from './components/UI/navbar/navbar';
-import AppRouter from './components/AppRouter';
+import React, {useState} from 'react'
+import {BrowserRouter} from 'react-router-dom'
+import Navbar from './components/UI/navbar/navbar'
+import AppRouter from './components/AppRouter'
 
 function App() {
+    const loadTime = window.performance.timing.domContentLoadedEventEnd - window.performance.timing.navigationStart
+    console.log("page load time: ", loadTime)
+
     if (!localStorage.getItem('condemnations')) {
         localStorage.setItem('condemnations', "[]")
     }
